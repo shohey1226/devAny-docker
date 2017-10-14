@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DEVANY_SESSION_ID="$(cat ~/.devany)"
+FILE="$(cd "$(dirname "$1")"; pwd)/$(basename "$1")"
+echo "devany:${DEVANY_SESSION_ID}:$FILE"

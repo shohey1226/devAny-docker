@@ -51,4 +51,10 @@ RUN apt-get install -y --no-install-recommends build-essential \
     less \
     sudo
 
+#------------------------------------------------------------------------------
+# devAny
+#------------------------------------------------------------------------------
+
+ADD devany /usr/local/bin
+
 CMD ["/run.sh"]

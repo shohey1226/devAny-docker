@@ -1,5 +1,24 @@
-#!/bin/bash
+#!/usr/bin/perl
 
-DEVANY_SESSION_ID="$(cat ~/.devany)"
-FILE="$(cd "$(dirname "$1")"; pwd)/$(basename "$1")"
-echo "devany:${DEVANY_SESSION_ID}:$FILE"
+use Getopt::Long;
+use File::Spec;
+
+my $username = getpwuid($<);
+my $help = 0;
+
+GetOptions(
+  'file=s' => \ my $file,
+  'link=s'   => \ my $link,
+  'help'     =>  \$help,
+);
+
+if($help){
+  print "devany -f file or devany -l link\n";
+}
+
+my $session_id = `cat ~/.devany`;
+chomp $session_id;
+my $file_path = File::Spec->rel2abs( $file ) ;
+$file_path =~ s/\/home\/$username\///;
+
+print "devany:file:$session_id:$file_path\n";

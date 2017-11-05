@@ -31,7 +31,7 @@ RUN apt-get install -y ttyd
 #------------------------------------------------------------------------------
 RUN apt-get install -y apache2 apache2-utils
 
-RUN a2enmod dav dav_fs
+RUN a2enmod dav dav_fs proxy rewrite proxy_http proxy_wstunnel
 RUN a2dissite 000-default
 
 ENV APACHE_RUN_USER www-data
@@ -48,6 +48,8 @@ RUN sed -i -e 's_80_8888_g' /etc/apache2/ports.conf
 ADD conf/apache2/webdav.conf /etc/apache2/sites-available/webdav.conf
 RUN a2ensite webdav
 ADD conf/apache2/envvars /etc/apache2/envvars
+
+ADD conf/apache2/proxy.conf /etc/apache2/mods-enabled/proxy.conf
 
 #------------------------------------------------------------------------------
 # devAny
@@ -80,7 +82,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # ------------------------------------------------------------------------------
 # Expose ports.
 EXPOSE 80
-EXPOSE 8080
+#EXPOSE 8080 # using reserve proxy
 EXPOSE 3000
 
 # ------------------------------------------------------------------------------

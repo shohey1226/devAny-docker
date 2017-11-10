@@ -60,6 +60,7 @@ ADD devany /usr/local/bin
 # desktop user
 #------------------------------------------------------------------------------
 RUN apt-get install -y --no-install-recommends build-essential \
+    libreadline-dev \
     ca-certificates \
     curl \
     git \

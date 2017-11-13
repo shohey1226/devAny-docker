@@ -12,13 +12,27 @@ GetOptions(
   'help'     =>  \$help,
 );
 
-if($help){
-  print "devany -f file or devany -l link\n";
-}
-
 my $session_id = `cat ~/.devany`;
 chomp $session_id;
-my $file_path = File::Spec->rel2abs( $file ) ;
-$file_path =~ s/\/home\/$username\///;
 
-print "devany:file:$session_id:$file_path\n";
+if($help){
+  show_help();
+}elsif($file){
+  my $file_path = File::Spec->rel2abs( $file ) ;
+  $file_path =~ s/\/home\/$username\///;
+  # Open file by editor
+  print "devany|file|$session_id|$file_path\n";
+  
+}elsif($link){
+  # Open link by browser
+  print "devany|link|$session_id|$link\n";
+}else{
+  show_help();
+}
+
+
+sub show_help(){
+  print "Usage:\n";
+  print "> devany -file README.md\n";
+  print "> devany -link https://www.google.com\n";
+}

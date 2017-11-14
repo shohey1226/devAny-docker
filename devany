@@ -21,11 +21,11 @@ if($help){
   my $file_path = File::Spec->rel2abs( $file ) ;
   $file_path =~ s/\/home\/$username\///;
   # Open file by editor
-  print "devany|file|$session_id|$file_path\n";
-  
+  print "devany|file|$file_path|$session_id\n";
+
 }elsif($link){
   # Open link by browser
-  print "devany|link|$session_id|$link\n";
+  print "devany|link|$link|$session_id\n";
 }else{
   show_help();
 }

@@ -59,7 +59,7 @@ ADD devany /usr/local/bin
 #------------------------------------------------------------------------------
 # desktop user
 #------------------------------------------------------------------------------
-RUN apt-get install -y --no-install-recommends build-essential \
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential \
     libreadline-dev \
     ca-certificates \
     curl \
@@ -69,7 +69,9 @@ RUN apt-get install -y --no-install-recommends build-essential \
     vim-nox \
     make \
     less \
-    sudo
+    sudo \
+    libsqlite3-dev
+
 
 # ------------------------------------------------------------------------------
 # Add volumes

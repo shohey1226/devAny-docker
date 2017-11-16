@@ -21,12 +21,15 @@ if($help){
 }elsif($file){
   my $file_path = File::Spec->rel2abs( $file ) ;
   $file_path =~ s/\/home\/$username\///;
-  # Open file by editor
-  print "file|devany|$file_path|$epoch_time|$session_id\n";
   
+  # Open file by editor
+  print "devany|file|$file_path|$epoch_time|$session_id\n";  
+
 }elsif($link){
+
   # Open link by browser
-  print "link|devany|$link|$epoch_time|$session_id\n";
+  print "devany|link|$link|$epoch_time|$session_id\n";
+
 }else{
   show_help();
 }

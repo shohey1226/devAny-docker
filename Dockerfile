@@ -69,9 +69,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends build-essential
     vim-nox \
     make \
     less \
-    iputils-ping net-tools wget \
+    iputils-ping net-tools wget dnsutils \
+    locales \
     sudo \
     libsqlite3-dev
+
+# set up locale
+RUN locale-gen en_US.UTF-8 
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+
 
 
 # ------------------------------------------------------------------------------

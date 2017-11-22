@@ -94,7 +94,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Expose ports.
 #EXPOSE 80
 #EXPOSE 8080 # using reserve proxy
-#EXPOSE 3000
+EXPOSE 5000 # used for development
 
 # ------------------------------------------------------------------------------
 # Start supervisor, define default command.

@@ -16,11 +16,11 @@ fi
 export APACHE_RUN_USER=${USERNAME}
 export APACHE_RUN_GROUP=${USERNAME}
 # temporary state file location. This might be changed to /run in Wheezy+1
-export APACHE_PID_FILE=/var/tmp/apache2$SUFFIX.pid
-export APACHE_RUN_DIR=/var/tmp/run/apache2$SUFFIX
-export APACHE_LOCK_DIR=/var/tmp/lock/apache2$SUFFIX
+export APACHE_PID_FILE=/var/tmp/run/apache2.pid
+export APACHE_RUN_DIR=/var/tmp/run/apache2
+export APACHE_LOCK_DIR=/var/tmp/lock/apache2
 # Only /var/log/apache2 is handled by /etc/logrotate.d/apache2.
-export APACHE_LOG_DIR=/var/tmp/log/apache2$SUFFIX
+export APACHE_LOG_DIR=/var/tmp/log/apache2
 
 ## The locale used by some modules like mod_dav
 export LANG=C

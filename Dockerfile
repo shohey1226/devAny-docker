@@ -36,10 +36,6 @@ RUN a2dissite 000-default
 
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/tmp/log/apache2
-ENV APACHE_PID_FILE /var/tmp/run/apache2.pid
-ENV APACHE_LOCK_DIR /var/tmp/lock/apache2
-ENV APACHE_RUN_DIR /var/tmp/run/apache2
 
 #RUN mkdir -p /var/lock/apache2; chown www-data /var/lock/apache2
 #RUN mkdir -p /var/webdav; chown www-data /var/webdav
@@ -49,7 +45,14 @@ ADD conf/apache2/webdav.conf /etc/apache2/sites-available/webdav.conf
 RUN a2ensite webdav
 ADD conf/apache2/envvars /etc/apache2/envvars
 
-ADD conf/apache2/proxy.conf /etc/apache2/mods-enabled/proxy.conf
+ADD conf/apache2/proxy.conf /etc/apache2/sites-available/proxy.conf
+RUN a2ensite proxy 
+
+#------------------------------------------------------------------------------
+# Squid
+#------------------------------------------------------------------------------
+RUN apt-get install -y squid3
+ADD conf/squid/squid.conf /etc/squid/squid.conf
 
 #------------------------------------------------------------------------------
 # devAny
@@ -94,7 +97,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Expose ports.
 #EXPOSE 80
 #EXPOSE 8080 # using reserve proxy
-EXPOSE 5000 # used for development
+EXPOSE 5000 
 
 # ------------------------------------------------------------------------------
 # Start supervisor, define default command.

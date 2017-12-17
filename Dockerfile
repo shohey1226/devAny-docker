@@ -27,32 +27,17 @@ RUN apt-get update
 RUN apt-get install -y ttyd
 
 #------------------------------------------------------------------------------
-# webdav
+# apache/webdav
 #------------------------------------------------------------------------------
 RUN apt-get install -y apache2 apache2-utils
-
 RUN a2enmod dav dav_fs proxy rewrite proxy_http proxy_wstunnel
 RUN a2dissite 000-default
-
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-
-#RUN mkdir -p /var/lock/apache2; chown www-data /var/lock/apache2
-#RUN mkdir -p /var/webdav; chown www-data /var/webdav
 RUN sed -i -e 's_80_8888_g' /etc/apache2/ports.conf
-
 ADD conf/apache2/webdav.conf /etc/apache2/sites-available/webdav.conf
 RUN a2ensite webdav
 ADD conf/apache2/envvars /etc/apache2/envvars
-
 ADD conf/apache2/proxy.conf /etc/apache2/sites-available/proxy.conf
-RUN a2ensite proxy 
-
-#------------------------------------------------------------------------------
-# Squid
-#------------------------------------------------------------------------------
-RUN apt-get install -y squid3
-ADD conf/squid/squid.conf /etc/squid/squid.conf
+RUN a2ensite proxy
 
 #------------------------------------------------------------------------------
 # devAny
@@ -82,22 +67,9 @@ RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
-
-
-# ------------------------------------------------------------------------------
-# Add volumes
-#RUN mkdir /workspace
-#VOLUME /workspace
-
 # ------------------------------------------------------------------------------
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# ------------------------------------------------------------------------------
-# Expose ports.
-#EXPOSE 80
-#EXPOSE 8080 # using reserve proxy
-EXPOSE 5000 
 
 # ------------------------------------------------------------------------------
 # Start supervisor, define default command.

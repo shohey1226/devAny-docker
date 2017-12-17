@@ -1,7 +1,8 @@
 #!/bin/bash
 
-useradd -m -d /home/$USERNAME -u 7777 -s /bin/bash -p $(echo $PASSWORD | openssl passwd -1 -stdin) $USERNAME
+useradd -m -d /home/$USERNAME -s /bin/bash -p $(echo $PASSWORD | openssl passwd -1 -stdin) $USERNAME
 usermod -aG sudo $USERNAME
+chown -R $USERNAME:$USERNAME /home/$USERNAME
 
 htpasswd -cb /etc/apache2/webdav.password $USERNAME $PASSWORD
 chown root:$USERNAME /etc/apache2/webdav.password

@@ -12,9 +12,6 @@ RUN apt-get install -y build-essential g++ curl libssl-dev apache2-utils git lib
 RUN sed -i 's/^\(\[supervisord\]\)$/\1\nnodaemon=true/' /etc/supervisor/supervisord.conf
 RUN update-rc.d supervisor defaults
 
-# Tweak standlone.js conf
-# RUN sed -i -e 's_127.0.0.1_0.0.0.0_g' /cloud9/configs/standalone.js 
-
 # Add supervisord conf
 ADD conf/supervisor/* /etc/supervisor/conf.d/
 
@@ -60,6 +57,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends build-essential
     iputils-ping net-tools wget dnsutils \
     locales \
     sudo \
+    file \
+    python-setuptools \
     libsqlite3-dev
 
 # set up locale
@@ -76,8 +75,6 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 ADD scripts/run.sh /
 CMD ["/run.sh"]
 
-
-#CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 
 
 

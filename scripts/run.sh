@@ -1,8 +1,10 @@
 #!/bin/bash
 
 useradd -m -d /home/$USERNAME -s /bin/bash -p $(echo $PASSWORD | openssl passwd -1 -stdin) $USERNAME
-usermod -aG sudo $USERNAME
 chown -R $USERNAME:$USERNAME /home/$USERNAME
+
+# Enable user to sudo 
+usermod -aG sudo $USERNAME
 
 htpasswd -cb /etc/apache2/webdav.password $USERNAME $PASSWORD
 chown root:$USERNAME /etc/apache2/webdav.password

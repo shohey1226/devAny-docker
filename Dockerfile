@@ -52,6 +52,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends build-essential
     libssl-dev \
     tmux \
     vim-nox \
+    emacs-nox \
     make \
     less \
     iputils-ping net-tools wget dnsutils \
